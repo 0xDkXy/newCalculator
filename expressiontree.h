@@ -23,20 +23,24 @@ class expressionTree : public QObject
 public:
     expressionTree();
     //node
-    struct node{
+    struct Node{
         bigInteger dig0 = bigInteger();
         double dig1 = 0;
         int x,y,id,lson,rson;
         char ope = '?';
+        bool isAlpha;
         std::string val = "";
         void toStr()
         {
-            val.clear();
-            if (ope != '?') val += ope;
+            if (isAlpha){
+                val = "";
+                val += ope;
+            }
             else val = dig0.toString();
         }
-    };
-    node *treeNode = new node[3010];
+    }node[1020];
+
+//    node *treeNode = new node[3010];
     int tot,head;
     int flag = 0;
     Q_INVOKABLE void setExpression(QString getExp);
@@ -48,20 +52,33 @@ public:
     Q_INVOKABLE int getLson();
     Q_INVOKABLE int getRson();
     Q_INVOKABLE QString getExp();
-    Q_INVOKABLE void clean();
+//    Q_INVOKABLE void clean();
 
 signals:
 
 
 private:
+    struct Item {
+        bigInteger digital0 = bigInteger();
+        char alpha;
+        bool isAlpha = false;
+    }item[1010];
+
+    int cnt, nodeNum;
+//    int lch[1020], rch[1020], op[1020];
     std::stack<char>operation;
     std::stack<bigInteger>digitals;
-    std::stack<node>expNode;
+    std::stack<Node>expNode;
     std::string exp;
-    void solveExp();
-    void dfs0(int root);
-    void dfs1(int root);
-    void dfs2(int root);
+//    void solveExp();
+    void init();
+    void analyse();
+    int build_tree(int x, int y);
+    void PreOrder(int root);
+    void InOrder(int root);
+    void PostOrder(int root);
+    bigInteger ans;
+    bigInteger calc(int root);
     QString s;
 };
 

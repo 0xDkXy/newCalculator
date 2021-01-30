@@ -41,7 +41,7 @@ public:
 
 private:
     std::vector<char> digits;
-    bool sign;
+    bool sign = true;
 };
 
 #endif // BIGINTEGER_H
