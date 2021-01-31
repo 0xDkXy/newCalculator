@@ -11,7 +11,13 @@ expressionTree::expressionTree()
 void expressionTree::setExpression(QString getExp)
 {
     exp = getExp.toStdString();
+    expLen = exp.size();
     init();
+    if (!isRight()) {
+        exp = "ERROR";
+        qDebug() << QString::fromStdString(exp);
+        return;
+    }
     analyse();
     head = build_tree(0, cnt);
     ans = calc(1);
@@ -43,8 +49,39 @@ QString expressionTree::getExpression()
     return QString::fromStdString(exp);
 }
 
+// 判断表达式是否正确
 bool expressionTree::isRight()
 {
+    int flag = 0;
+    while (!operation.empty()) operation.pop();
+    int lenExp = expLen;
+    for (int i = 0; i < lenExp - 1; ++i) {
+//        qDebug() << exp[i] <<" " << isalpha(exp[i]) << "\n" << flag;
+        if (!isdigit(exp[i])) {
+            if (exp[i] == '(') {
+                operation.push(exp[i]);
+                continue;
+            }
+            if (exp[i] == ')') {
+                if (!operation.empty()) {
+                    operation.pop();
+                    continue;
+                } else {
+                    flag = 1;
+                    break;
+                }
+            }
+//            qDebug() << exp[i + 1];
+            if ((!isdigit(exp[i + 1]))
+                    && (exp[i + 1] != '(' || exp[i + 1] != ')')) {
+                    flag = 1;
+                    break;
+            }
+        }
+    }
+    if (flag) {
+        return false;
+    }
     return true;
 }
 

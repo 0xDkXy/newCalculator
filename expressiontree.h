@@ -77,6 +77,7 @@ private:
     void PreOrder(int root);
     void InOrder(int root);
     void PostOrder(int root);
+    int expLen;
     bigInteger ans;
     bigInteger calc(int root);
     QString s;
