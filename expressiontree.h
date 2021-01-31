@@ -41,7 +41,7 @@ public:
     }node[1020];
 
 //    node *treeNode = new node[3010];
-    int tot,head;
+    int tot;
     int flag = 0;
     Q_INVOKABLE void setExpression(QString getExp);
     Q_INVOKABLE QString getExpression();
@@ -63,7 +63,7 @@ private:
         char alpha;
         bool isAlpha = false;
     }item[1010];
-
+    int head;
     int cnt, nodeNum;
 //    int lch[1020], rch[1020], op[1020];
     std::stack<char>operation;
@@ -81,6 +81,8 @@ private:
     bigInteger ans;
     bigInteger calc(int root);
     QString s;
+    int _right = 0;
+    bool _isRight();
 };
 
 #endif // EXPRESSIONTREE_H

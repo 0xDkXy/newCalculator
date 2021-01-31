@@ -13,7 +13,7 @@ void expressionTree::setExpression(QString getExp)
     exp = getExp.toStdString();
     expLen = exp.size();
     init();
-    if (!isRight()) {
+    if (!_isRight()) {
         exp = "ERROR";
         qDebug() << QString::fromStdString(exp);
         return;
@@ -49,14 +49,19 @@ QString expressionTree::getExpression()
     return QString::fromStdString(exp);
 }
 
-// 判断表达式是否正确
 bool expressionTree::isRight()
+{
+    return _right;
+}
+
+// 判断表达式是否正确
+bool expressionTree::_isRight()
 {
     int flag = 0;
     while (!operation.empty()) operation.pop();
     int lenExp = expLen;
-    for (int i = 0; i < lenExp - 1; ++i) {
-//        qDebug() << exp[i] <<" " << isalpha(exp[i]) << "\n" << flag;
+    for (int i = 0; i < lenExp; ++i) {
+//        qDebug() << exp[i] <<" " << isdigit(exp[i]) << "\n" << flag;
         if (!isdigit(exp[i])) {
             if (exp[i] == '(') {
                 operation.push(exp[i]);
@@ -80,8 +85,11 @@ bool expressionTree::isRight()
         }
     }
     if (flag) {
+        _right = 0;
         return false;
+
     }
+    _right = 1;
     return true;
 }
 
@@ -367,7 +375,8 @@ bigInteger expressionTree::calc(int root)
         tmpAns = a - b;
         break;
     case '*':
-        tmpAns = a * b;
+//        tmpAns = a * b;
+        tmpAns = fft_mul(a, b);
         break;
     case '/':
         tmpAns = a / b;

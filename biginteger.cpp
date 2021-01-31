@@ -237,3 +237,30 @@ bigInteger operator / (const bigInteger& b1, const bigInteger& b2)
 {
     return divmod(b1, b2);
 }
+
+bigInteger fft_mul (bigInteger& b1, bigInteger& b2)
+{
+    std::string s1 = b1.toString(), s2 = b2.toString();
+    bool sign1,sign2;
+    sign1 = sign2 = 1;
+    if (s1[0] == '-'){
+        sign1 = 0;
+        s1.erase(0,1);
+    }
+    if (s2[0] == '-'){
+        sign2 = 0;
+        s2.erase(0,1);
+    }
+    bool ansSign = ~(sign1 ^ sign2);
+    fft f1 = fft();
+    std::string strAns = f1.calc(s1, s2);
+    bigInteger ans = bigInteger(strAns);
+    ans.setSign(ansSign);
+    return ans;
+}
+
+void bigInteger::setSign(bool _sign)
+{
+    sign = _sign;
+}
+

@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "fft.h"
 
 class bigInteger
 {
@@ -33,11 +34,13 @@ public:
     friend bigInteger operator * (const bigInteger& b1,const bigInteger& b2);
     friend bigInteger operator / (const bigInteger& b1,const bigInteger& b2);
     friend bigInteger divmod (bigInteger &a, const bigInteger &b);
+    friend bigInteger fft_mul(bigInteger& b1, bigInteger& b2);
     void print();
     int size() const {return digits.size();}
     std::string toString();
     void assign(int num, int val);
     void back(int val);
+    void setSign(bool _sign);
 
 private:
     std::vector<char> digits;

@@ -9,6 +9,7 @@ CONFIG += c++11
 SOURCES += \
         biginteger.cpp \
         expressiontree.cpp \
+        fft.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -29,4 +30,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     biginteger.h \
-    expressiontree.h
+    expressiontree.h \
+    fft.h
